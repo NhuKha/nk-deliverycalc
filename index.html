@@ -7,6 +7,7 @@
 <title>Delivery Earnings Calculator</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -20,7 +21,31 @@ body {
 }
 
 .container {
-    
+    max-width: 1200px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #94a3b8;
+    margin-bottom: 25px;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: #1e293b;
+    padding: 18px;
     border-radius: 15px;
     text-align: center;
 }
@@ -31,7 +56,7 @@ body {
 }
 
 .card-value {
-    font-size: 25px;
+    font-size: 24px;
     font-weight: bold;
     margin-top: 8px;
 }
@@ -42,6 +67,10 @@ body {
 
 .yellow {
     color: #facc15;
+}
+
+.purple {
+    color: #c084fc;
 }
 
 .red {
@@ -61,12 +90,13 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 950px;
+    min-width: 1000px;
 }
 
 th {
     background: #334155;
     padding: 12px 8px;
+    font-size: 14px;
 }
 
 td {
@@ -76,7 +106,7 @@ td {
 }
 
 input {
-    width: 90px;
+    width: 95px;
     padding: 10px;
     font-size: 16px;
     text-align: right;
@@ -125,21 +155,62 @@ button {
     color: white;
 }
 
-@media (max-width: 700px) {
+.extra {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.week-total {
+    background: #1e293b;
+    border: 2px solid #22c55e;
+    border-radius: 18px;
+    padding: 28px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.week-total-title {
+    color: #cbd5e1;
+    font-size: 17px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.week-total-value {
+    color: #4ade80;
+    font-size: 42px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+@media (max-width: 800px) {
+
     body {
         padding: 10px;
     }
 
     h1 {
-        font-size: 24px;
+        font-size: 23px;
     }
 
-    .summary,
-    .extra {
+    .summary {
         grid-template-columns: 1fr 1fr;
     }
+
+    .extra {
+        grid-template-columns: 1fr;
+    }
+
+    .week-total-value {
+        font-size: 34px;
+    }
+
 }
+
 </style>
+
 </head>
 
 <body>
@@ -152,9 +223,6 @@ button {
 Uber Eats + DoorDash Weekly Earnings
 </div>
 
-
-<!-- TOP TOTALS -->
-
 <div class="summary">
 
     <div class="card">
@@ -163,8 +231,13 @@ Uber Eats + DoorDash Weekly Earnings
     </div>
 
     <div class="card">
-        <div class="card-title">DoorDash</div>
-        <div class="card-value yellow" id="ddTotal">$0.00</div>
+        <div class="card-title">Nhu's DoorDash</div>
+        <div class="card-value yellow" id="nhuTotal">$0.00</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Hang's DoorDash</div>
+        <div class="card-value purple" id="hangTotal">$0.00</div>
     </div>
 
     <div class="card">
@@ -179,9 +252,6 @@ Uber Eats + DoorDash Weekly Earnings
 
 </div>
 
-
-<!-- DAILY ENTRIES -->
-
 <div class="table-container">
 
 <table>
@@ -191,12 +261,12 @@ Uber Eats + DoorDash Weekly Earnings
 <tr>
     <th>Day</th>
     <th>Uber Eats $</th>
-    <th>DoorDash $</th>
+    <th>Nhu DD $</th>
+    <th>Hang DD $</th>
     <th>Electric $</th>
     <th>Gas $</th>
     <th>Active Hours</th>
-    <th>Miles</th>
-    <th>Daily Net</th>
+    <th>Earnings Today</th>
 </tr>
 
 </thead>
@@ -206,9 +276,6 @@ Uber Eats + DoorDash Weekly Earnings
 </table>
 
 </div>
-
-
-<!-- BUTTONS -->
 
 <div class="buttons">
 
@@ -226,74 +293,38 @@ Uber Eats + DoorDash Weekly Earnings
 
 </div>
 
-
-<!-- WEEK TOTALS -->
-
 <div class="extra">
 
     <div class="card">
-
-        <div class="card-title">
-            Total Gross
-        </div>
-
-        <div
-        class="card-value blue"
-        id="grossTotal">
-            $0.00
-        </div>
-
+        <div class="card-title">Total Gross</div>
+        <div class="card-value blue" id="grossTotal">$0.00</div>
     </div>
 
-
     <div class="card">
-
-        <div class="card-title">
-            Total Active Time
-        </div>
-
-        <div
-        class="card-value"
-        id="activeTotal">
-            0.00 hr
-        </div>
-
+        <div class="card-title">Total Active Time</div>
+        <div class="card-value" id="activeTotal">0.00 hr</div>
     </div>
 
-
     <div class="card">
-
-        <div class="card-title">
-            Net / Active Hour
-        </div>
-
-        <div
-        class="card-value green"
-        id="netPerHour">
-            $0.00
-        </div>
-
+        <div class="card-title">Net / Active Hour</div>
+        <div class="card-value green" id="netPerHour">$0.00</div>
     </div>
 
+</div>
 
-    <div class="card">
+<div class="week-total">
 
-        <div class="card-title">
-            Net / Mile
-        </div>
+    <div class="week-total-title">
+        💰 TOTAL EARNINGS THIS WEEK
+    </div>
 
-        <div
-        class="card-value green"
-        id="netPerMile">
-            $0.00
-        </div>
-
+    <div class="week-total-value" id="weekTotal">
+        $0.00
     </div>
 
 </div>
 
 </div>
-
 
 <script>
 
@@ -309,9 +340,6 @@ const weekDays = [
 
 const table =
     document.getElementById("days");
-
-
-/* CREATE DAYS */
 
 weekDays.forEach((day, index) => {
 
@@ -340,7 +368,17 @@ weekDays.forEach((day, index) => {
             min="0"
             step="0.01"
             data-day="${index}"
-            data-type="dd"
+            data-type="nhu"
+            placeholder="0.00">
+        </td>
+
+        <td>
+            <input
+            type="number"
+            min="0"
+            step="0.01"
+            data-day="${index}"
+            data-type="hang"
             placeholder="0.00">
         </td>
 
@@ -374,16 +412,6 @@ weekDays.forEach((day, index) => {
             placeholder="0.00">
         </td>
 
-        <td>
-            <input
-            type="number"
-            min="0"
-            step="0.1"
-            data-day="${index}"
-            data-type="miles"
-            placeholder="0">
-        </td>
-
         <td
         class="dailyNet"
         id="daily-${index}">
@@ -409,24 +437,26 @@ function getNumber(day, type) {
 }
 
 
-/* CALCULATE */
-
 function calculate() {
 
     let uber = 0;
-    let dd = 0;
+    let nhu = 0;
+    let hang = 0;
     let electric = 0;
     let gas = 0;
     let hours = 0;
-    let miles = 0;
+
 
     weekDays.forEach((day, index) => {
 
         const dayUber =
             getNumber(index, "uber");
 
-        const dayDD =
-            getNumber(index, "dd");
+        const dayNhu =
+            getNumber(index, "nhu");
+
+        const dayHang =
+            getNumber(index, "hang");
 
         const dayElectric =
             getNumber(index, "electric");
@@ -437,47 +467,50 @@ function calculate() {
         const dayHours =
             getNumber(index, "hours");
 
-        const dayMiles =
-            getNumber(index, "miles");
 
         const dailyNet =
             dayUber +
-            dayDD -
+            dayNhu +
+            dayHang -
             dayElectric -
             dayGas;
+
 
         document.getElementById(
             "daily-" + index
         ).textContent =
             "$" + dailyNet.toFixed(2);
 
+
         uber += dayUber;
-        dd += dayDD;
+        nhu += dayNhu;
+        hang += dayHang;
         electric += dayElectric;
         gas += dayGas;
         hours += dayHours;
-        miles += dayMiles;
 
     });
 
 
     const gross =
-        uber + dd;
+        uber +
+        nhu +
+        hang;
+
 
     const totalCost =
-        electric + gas;
+        electric +
+        gas;
+
 
     const net =
-        gross - totalCost;
+        gross -
+        totalCost;
+
 
     const netPerHour =
         hours > 0
         ? net / hours
-        : 0;
-
-    const netPerMile =
-        miles > 0
-        ? net / miles
         : 0;
 
 
@@ -488,9 +521,15 @@ function calculate() {
 
 
     document.getElementById(
-        "ddTotal"
+        "nhuTotal"
     ).textContent =
-        "$" + dd.toFixed(2);
+        "$" + nhu.toFixed(2);
+
+
+    document.getElementById(
+        "hangTotal"
+    ).textContent =
+        "$" + hang.toFixed(2);
 
 
     document.getElementById(
@@ -524,14 +563,12 @@ function calculate() {
 
 
     document.getElementById(
-        "netPerMile"
+        "weekTotal"
     ).textContent =
-        "$" + netPerMile.toFixed(2);
+        "$" + net.toFixed(2);
 
 }
 
-
-/* AUTO CALCULATE */
 
 document
 .querySelectorAll("input")
@@ -544,8 +581,6 @@ document
 
 });
 
-
-/* SAVE */
 
 document
 .getElementById("save")
@@ -562,8 +597,11 @@ document
             uber:
                 getNumber(index, "uber"),
 
-            dd:
-                getNumber(index, "dd"),
+            nhu:
+                getNumber(index, "nhu"),
+
+            hang:
+                getNumber(index, "hang"),
 
             electric:
                 getNumber(index, "electric"),
@@ -572,10 +610,7 @@ document
                 getNumber(index, "gas"),
 
             hours:
-                getNumber(index, "hours"),
-
-            miles:
-                getNumber(index, "miles")
+                getNumber(index, "hours")
 
         });
 
@@ -592,8 +627,6 @@ document
 
 });
 
-
-/* LOAD SAVED DATA */
 
 function loadSaved() {
 
@@ -615,11 +648,11 @@ function loadSaved() {
 
         const types = [
             "uber",
-            "dd",
+            "nhu",
+            "hang",
             "electric",
             "gas",
-            "hours",
-            "miles"
+            "hours"
         ];
 
 
@@ -632,10 +665,8 @@ function loadSaved() {
 
 
             if (input) {
-
                 input.value =
                     day[type] || "";
-
             }
 
         });
@@ -648,8 +679,6 @@ function loadSaved() {
 }
 
 
-/* EXPORT CSV */
-
 document
 .getElementById("export")
 .addEventListener(
@@ -658,24 +687,25 @@ document
 
     const rows = [];
 
+
     rows.push([
         "Day",
         "Uber Eats",
-        "DoorDash",
+        "Nhu DoorDash",
+        "Hang DoorDash",
         "Electric",
         "Gas",
         "Active Hours",
-        "Miles",
-        "Daily Net"
+        "Earnings Today"
     ]);
 
 
     let totalUber = 0;
-    let totalDD = 0;
+    let totalNhu = 0;
+    let totalHang = 0;
     let totalElectric = 0;
     let totalGas = 0;
     let totalHours = 0;
-    let totalMiles = 0;
 
 
     weekDays.forEach((day, index) => {
@@ -683,8 +713,11 @@ document
         const uber =
             getNumber(index, "uber");
 
-        const dd =
-            getNumber(index, "dd");
+        const nhu =
+            getNumber(index, "nhu");
+
+        const hang =
+            getNumber(index, "hang");
 
         const electric =
             getNumber(index, "electric");
@@ -695,50 +728,41 @@ document
         const hours =
             getNumber(index, "hours");
 
-        const miles =
-            getNumber(index, "miles");
 
         const net =
             uber +
-            dd -
+            nhu +
+            hang -
             electric -
             gas;
 
 
         rows.push([
-
             day,
-
             uber.toFixed(2),
-
-            dd.toFixed(2),
-
+            nhu.toFixed(2),
+            hang.toFixed(2),
             electric.toFixed(2),
-
             gas.toFixed(2),
-
             hours.toFixed(2),
-
-            miles.toFixed(1),
-
             net.toFixed(2)
-
         ]);
 
 
         totalUber += uber;
-        totalDD += dd;
+        totalNhu += nhu;
+        totalHang += hang;
         totalElectric += electric;
         totalGas += gas;
         totalHours += hours;
-        totalMiles += miles;
 
     });
 
 
     const gross =
         totalUber +
-        totalDD;
+        totalNhu +
+        totalHang;
 
 
     const totalCost =
@@ -755,57 +779,34 @@ document
 
 
     rows.push([
-
         "WEEK TOTAL",
-
         totalUber.toFixed(2),
-
-        totalDD.toFixed(2),
-
+        totalNhu.toFixed(2),
+        totalHang.toFixed(2),
         totalElectric.toFixed(2),
-
         totalGas.toFixed(2),
-
         totalHours.toFixed(2),
-
-        totalMiles.toFixed(1),
-
         net.toFixed(2)
-
     ]);
 
 
     rows.push([
-        "Gross Earnings",
+        "Total Gross",
         gross.toFixed(2)
     ]);
 
 
     rows.push([
-        "Net Earnings",
+        "Total Earnings This Week",
         net.toFixed(2)
     ]);
 
 
     rows.push([
-
         "Net Per Active Hour",
-
         totalHours > 0
         ? (net / totalHours).toFixed(2)
         : "0.00"
-
-    ]);
-
-
-    rows.push([
-
-        "Net Per Mile",
-
-        totalMiles > 0
-        ? (net / totalMiles).toFixed(2)
-        : "0.00"
-
     ]);
 
 
@@ -835,7 +836,8 @@ document
         document.createElement("a");
 
 
-    link.href = url;
+    link.href =
+        url;
 
 
     const today =
@@ -860,8 +862,6 @@ document
 
 });
 
-
-/* RESET */
 
 document
 .getElementById("reset")
@@ -898,8 +898,6 @@ document
 
 });
 
-
-/* START */
 
 loadSaved();
 
